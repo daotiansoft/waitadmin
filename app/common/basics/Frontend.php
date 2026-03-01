@@ -17,7 +17,6 @@ namespace app\common\basics;
 
 use app\BaseController;
 use app\common\enums\ClientEnum;
-use app\common\model\dev\DevNavigation;
 use app\common\utils\ArrayUtils;
 use app\common\utils\ConfigUtils;
 use app\common\utils\UrlUtils;
@@ -92,28 +91,11 @@ abstract class Frontend extends BaseController
      */
     protected function setValues(): void
     {
-        $modelNavigation = new DevNavigation();
-        $navigationData = $modelNavigation
-            ->field('id,pid,name,target,url')
-            ->where(['is_disable' => 0])
-            ->where(['is_delete' => 0])
-            ->order('sort desc, id desc')
-            ->select()->toArray();
 
-        $pcConfig = ConfigUtils::get('pc');
-        $pcConfig['logo'] = UrlUtils::toAbsoluteUrl($pcConfig['logo']??'');
 
-        $loginConfig = ConfigUtils::get('login', 'pc');
-        $isOpenLogin = (bool) $loginConfig['usable_channel'];
-        $isOpenRegister = in_array('account', $loginConfig['usable_register']);
-
-        View::assign('pc', $pcConfig);
         View::assign('userInfo', $this->userInfo);
         View::assign('action', $this->request->action());
         View::assign('website', ConfigUtils::get('website'));
-        View::assign('navigation', ArrayUtils::toTreeJson($navigationData));
-        View::assign('isOpenLogin', $isOpenLogin);
-        View::assign('isOpenRegister', $isOpenRegister);
     }
 
     /**

@@ -56,6 +56,7 @@ if (!function_exists('route')) {
         if (!str_starts_with($url, '/')) {
             $url = '/' . $url;
         }
+        
 
         return $url;
     }

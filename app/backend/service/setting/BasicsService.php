@@ -41,25 +41,6 @@ class BasicsService extends Service
             'pcp'       => $website['pcp']??'',
             'analyse'   => $website['analyse']??''
         ];
-
-        // PC端配置
-        $pc = ConfigUtils::get('pc');
-        $detail['pc'] = [
-            'title'       => $pc['title']??'',
-            'keywords'    => $pc['keywords']??'',
-            'description' => $pc['description']??'',
-            'logo'        => UrlUtils::toAbsoluteUrl(strval($pc['logo']??'')),
-        ];
-
-        // H5端配置
-        $h5 = ConfigUtils::get('h5');
-        $detail['h5'] = [
-            'title'     => $h5['title']??'',
-            'logo'      => UrlUtils::toAbsoluteUrl(strval($h5['logo']??'')),
-            'status'    => intval($h5['status']??0),
-            'close_url' => strval($h5['close_url']??''),
-        ];
-
         return $detail;
     }
 
@@ -78,22 +59,6 @@ class BasicsService extends Service
             'pcp'       => $post['website_pcp']??'',
             'analyse'   => $post['website_analyse']??'',
             'copyright' => $post['website_copyright']??''
-        ]);
-
-        // PC端配置
-        ConfigUtils::setItem('pc', [
-            'title'       => $post['pc_title']??'',
-            'keywords'    => $post['pc_keywords']??'',
-            'description' => $post['pc_description']??'',
-            'logo' => UrlUtils::toRelativeUrl($post['pc_logo']??'')
-        ]);
-
-        // H5端配置
-        ConfigUtils::setItem('h5', [
-            'title'     => $post['h5_title']??'',
-            'logo'      => UrlUtils::toRelativeUrl($post['h5_logo']??''),
-            'status'    => $post['h5_status']??0,
-            'close_url' => $post['h5_close_url']??'',
         ]);
     }
 }

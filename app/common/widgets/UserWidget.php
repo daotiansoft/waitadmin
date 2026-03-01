@@ -61,20 +61,11 @@ class UserWidget extends Service
             ClientEnum::OA => 'wx',
             default => 'other'
         };
-        $config = ConfigUtils::get('login', $ck, []);
 
         // 密码信息
         $salt = make_rand_char(6);
         if ($password) {
             $password = make_md5_str(trim($password), $salt);
-        }
-
-        // 强制绑定
-        $forceMobile = boolval($config['force_mobile']??false);
-        if ($forceMobile && !$mobile) {
-            $data = ['sign'=>md5(time().make_rand_char(8))];
-            EnrollCache::set($data['sign'], $response);
-            throw new OperateException('需绑定手机号', 1, $data);
         }
 
         // 验证账号
